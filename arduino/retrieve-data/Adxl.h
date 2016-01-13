@@ -20,7 +20,7 @@
 
 #define ADXL_INT_MAP_V 0x00
 
-#define ADXL_INT_INVERT_V 0 // shift 5
+#define ADXL_INT_INVERT_V 1 // shift 5
 #define ADXL_FULL_RES_V 0 // shift 3
 #define ADXL_JUSTIFY_V 0 // shift 2
 #define ADXL_RANGE_V 0b11 // shift 0 - +-16g
