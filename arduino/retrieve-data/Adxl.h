@@ -1,0 +1,3 @@
+
+
+void adxl_setup();
