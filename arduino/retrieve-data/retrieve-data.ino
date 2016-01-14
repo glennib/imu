@@ -86,7 +86,7 @@ void setup()   // treat this as a main()
     
     
     uint8_t adxl_data[ADXL_SAMPLES_V][ADXL_DATA_BYTES];
-    uint8_t fifo_data[ADXL_SAMPLES_V];
+    //uint8_t fifo_data[ADXL_SAMPLES_V];
     
     while (1)
     {
@@ -110,10 +110,10 @@ void setup()   // treat this as a main()
             Wire.endTransmission();
 
             // request bytes
-            Wire.requestFrom(ADXL_ADR, ADXL_DATA_BYTES+1);
+            Wire.requestFrom(ADXL_ADR, ADXL_DATA_BYTES);
             uint8_t counter = 0;
             
-            while (Wire.available()-1)
+            while (Wire.available())
             {
                 adxl_data[i][counter] = Wire.read();
                 counter++;
@@ -122,38 +122,38 @@ void setup()   // treat this as a main()
             {
                 error("Unexpected counter value");
             }
-            Wire.read();
-            delay(10);
+            Wire.endTransmission();
+            delayMicroseconds(5);
             // get fifo data
-            fifo_data[i] = spi_read_setting(ADXL_ADR, ADXL_FIFO_STATUS);
+            //fifo_data[i] = spi_read_setting(ADXL_ADR, ADXL_FIFO_STATUS);
         }
         
         for (int i = 0; i < ADXL_SAMPLES_V; i++)
         {
-            Serial.print("Last accelerometer values:");
+            //Serial.print("Last accelerometer values:");
 
             int16_t values[3];
             int32_t sz2 = 0;
-            for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
             {
-                uint8_t lsb = adxl_data[i][2*i];
-                uint8_t msb = adxl_data[i][2*i+1];
+                uint8_t lsb = adxl_data[i][2*j];
+                uint8_t msb = adxl_data[i][2*j+1];
                 int16_t val = (int16_t) ( (msb << 8) | (lsb) );
-                values[i] = val;
+                values[j] = val;
                 sz2 += (uint32_t)(((uint32_t)val) * ((uint32_t)val));
-                Serial.print(" ");
-                Serial.print(val, DEC);
+                //Serial.print(" ");
+                //Serial.print(val, DEC);
             }            
-            Serial.print(" Size = ");
+            //Serial.print(" Size = ");
             float sz = sqrt(sz2);
-            Serial.print(sz);
+            //Serial.print(sz);
             float y = (float) values[1];
             float z = (float) values[2];
             float theta = atan2(y, -z) * RAD2DEG;
             Serial.print(" Angle = ");
             Serial.print(theta);
-            Serial.print(" FIFO: 0b");
-            Serial.print(fifo_data[i], BIN);
+            //Serial.print(" FIFO: 0b");
+            //Serial.print(fifo_data[i], BIN);
 
             Serial.print('\n');
         }

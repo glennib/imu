@@ -6,7 +6,7 @@
 #define ADXL_OFSZ_V 0x00
 
 #define ADXL_LOW_POWER_V 0b0 // shift 4
-#define ADXL_RATE_V 0b0110 // shift 0 - +-16g
+#define ADXL_RATE_V 0b1001 // shift 0 - +-16g
 #define ADXL_BW_RATE_V ( (ADXL_LOW_POWER_V << 4) | (ADXL_RATE_V) )
 
 #define ADXL_LINK_V 0 // shift 5
