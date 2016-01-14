@@ -21,7 +21,63 @@ void initialize()
 void setup()   // treat this as a main()
 {
     initialize();
+
+    char buf[50];
+    while (1)
+    {
+        uint8_t counter = 0;
+        while (Serial.available())
+        {
+            buf[counter++] = Serial.read();
+        }
+        if (counter >= 3)
+        {
+            // should be consistent with 2 address characters and a newline
+            if (buf[2] == '\n')
+            {
+                char C1 = buf[0];
+                char C2 = buf[1];
+                uint8_t adr = 0;
+                if ( ( (C1 >= '0' && C1 <= '9') || (C1 >='A' && C1 <= 'F') ) && ( (C2 >= '0' && C2 <= '9') || (C2 >='A' && C2 <= 'F') ) )
+                {
+                    if (C1 >= 'A')
+                    {
+                        adr = (C1 - 'A' + 10) << 4;
+                    }
+                    else
+                    {
+                        adr = (C1 - '0') << 4;
+                    }
+
+                    if (C2 >= 'A')
+                    {
+                        adr |= (C2 - 'A' + 10);
+                    }
+                    else
+                    {
+                        adr |= (C2 - '0');
+                    }
+                    Serial.print(C1);
+                    Serial.print(C2);
+                    Serial.print(" = ");
+                    Serial.println(spi_read_setting(ADXL_ADR, adr), BIN);
+                }
+                else
+                {
+                    debug("Wrong format. Try again.");
+                }
+            }
+            else
+            {
+                debug("Error. Try again.");
+                
+            }
+            memset(buf, 0, 50);
+            counter = 0;
+        }
+    }
     
+    /*
     uint8_t adxl_data[ADXL_SAMPLES_V][6];
     
     while (1)
@@ -53,7 +109,7 @@ void setup()   // treat this as a main()
             }
         }
         
-    }
+    }*/
 }
 
 

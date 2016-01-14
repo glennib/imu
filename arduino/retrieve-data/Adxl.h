@@ -7,14 +7,14 @@
 
 #define ADXL_LOW_POWER_V 0b0 // shift 4
 #define ADXL_RATE_V 0b1010 // shift 0 - +-16g
-#define ADXL_BW_RATE_V ( (ADXL_LOW_POWER_V << 4) | (ADXL_RANGE_V) )
+#define ADXL_BW_RATE_V ( (ADXL_LOW_POWER_V << 4) | (ADXL_RATE_V) )
 
 #define ADXL_LINK_V 0 // shift 5
 #define ADXL_AUTO_SLEEP_V 0 // shift 4
 #define ADXL_MEASURE_V 1 // shift 3
 #define ADXL_SLEEP_V 0 // shift 2
 #define ADXL_WAKEUP_V 0b00 // shift 0
-#define ADXL_POWER_CTL_V ( (ADXL_LINK_V << 5) | (ADXL_AUTO_SLEEP_V << 4) | (ADXL_MEASURE_V << 3) | (ADXL_SLEEP_V << 2) || (ADXL_WAKEUP_V) )
+#define ADXL_POWER_CTL_V ( (ADXL_LINK_V << 5) | (ADXL_AUTO_SLEEP_V << 4) | (ADXL_MEASURE_V << 3) | (ADXL_SLEEP_V << 2) | (ADXL_WAKEUP_V) )
 
 #define ADXL_INT_ENABLE_V 0b00000010 // only watermark
 
@@ -24,7 +24,7 @@
 #define ADXL_FULL_RES_V 0 // shift 3
 #define ADXL_JUSTIFY_V 0 // shift 2
 #define ADXL_RANGE_V 0b11 // shift 0 - +-16g
-#define ADXL_DATA_FORMAT_V ( (ADXL_INT_INVERT_V << 5) | (ADXL_FULL_RES_V << 3) | (ADXL_JUSTIFY_V << 2) || (ADXL_RANGE_V) )
+#define ADXL_DATA_FORMAT_V ( (ADXL_INT_INVERT_V << 5) | (ADXL_FULL_RES_V << 3) | (ADXL_JUSTIFY_V << 2) | (ADXL_RANGE_V) )
 
 #define ADXL_FIFO_MODE_V 0b10 // shift 6 - stream
 #define ADXL_TRIGGER_V 0 // shift 5

@@ -21,5 +21,9 @@ void adxl_init()
     spi_set_confirm(ADXL_ADR, ADXL_INT_ENABLE, ADXL_INT_ENABLE_V);
     
     spi_set_confirm(ADXL_ADR, ADXL_POWER_CTL, ADXL_POWER_CTL_V);
+
+    delay(1000);
+
+    spi_set_confirm(ADXL_ADR, ADXL_POWER_CTL, ADXL_POWER_CTL_V);
 }
 
