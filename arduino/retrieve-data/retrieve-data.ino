@@ -7,6 +7,8 @@
 #include "Debug.h"
 #include "Spi.h"
 
+#define RAD2DEG 57.29577951
+
 
 void initialize()
 {
@@ -22,7 +24,8 @@ void setup()   // treat this as a main()
 {
     initialize();
 
-    char buf[50];
+    /*
+    char buf[10];
     while (1)
     {
         uint8_t counter = 0;
@@ -57,9 +60,12 @@ void setup()   // treat this as a main()
                     {
                         adr |= (C2 - '0');
                     }
+                    Serial.print("MAN - 0x");
+                    Serial.print(ADXL_ADR, HEX);
+                    Serial.print(": 0x");
                     Serial.print(C1);
                     Serial.print(C2);
-                    Serial.print(" = ");
+                    Serial.print(" = 0b");
                     Serial.println(spi_read_setting(ADXL_ADR, adr), BIN);
                 }
                 else
@@ -72,44 +78,86 @@ void setup()   // treat this as a main()
                 debug("Error. Try again.");
                 
             }
-            memset(buf, 0, 50);
+            memset(buf, 0, 10);
             counter = 0;
         }
     }
+    */
     
-    /*
-    uint8_t adxl_data[ADXL_SAMPLES_V][6];
+    
+    uint8_t adxl_data[ADXL_SAMPLES_V][ADXL_DATA_BYTES];
+    uint8_t fifo_data[ADXL_SAMPLES_V];
     
     while (1)
     {
-        debug("Waiting for interrupt");
+        //debug("Waiting for interrupt");
         
         while (digitalRead(ADXL_INT_PIN) == 0)
         {
             // wait for the interrupt
-            debug("Inside wait loop");
-            Serial.println(digitalRead(ADXL_INT_PIN));
-            delay(1000);
+            //debug("Inside wait loop");
+            //Serial.println(digitalRead(ADXL_INT_PIN));
+            //delay(1000);
         }
         
-        debug("Interrupt occurred");
-        Wire.beginTransmission(ADXL_ADR);
-        Wire.write(ADXL_DATAX0);
-        Wire.endTransmission();
+        //debug("Interrupt occurred");
+        
+        for (int i = 0; i < ADXL_SAMPLES_V; i++)
+        {            
+            // Start from DATAX0
+            Wire.beginTransmission(ADXL_ADR);
+            Wire.write(ADXL_DATAX0);
+            Wire.endTransmission();
+
+            // request bytes
+            Wire.requestFrom(ADXL_ADR, ADXL_DATA_BYTES+1);
+            uint8_t counter = 0;
+            
+            while (Wire.available()-1)
+            {
+                adxl_data[i][counter] = Wire.read();
+                counter++;
+            }
+            if (counter != ADXL_DATA_BYTES)
+            {
+                error("Unexpected counter value");
+            }
+            Wire.read();
+            delay(10);
+            // get fifo data
+            fifo_data[i] = spi_read_setting(ADXL_ADR, ADXL_FIFO_STATUS);
+        }
         
         for (int i = 0; i < ADXL_SAMPLES_V; i++)
         {
-            Wire.requestFrom(ADXL_ADR, 6);
-            uint8_t counter = 0;
-            
-            while (Wire.available())
+            Serial.print("Last accelerometer values:");
+
+            int16_t values[3];
+            int32_t sz2 = 0;
+            for (int i = 0; i < 3; i++)
             {
-                counter++;
-                adxl_data[i][counter] = Wire.read();
-            }
+                uint8_t lsb = adxl_data[i][2*i];
+                uint8_t msb = adxl_data[i][2*i+1];
+                int16_t val = (int16_t) ( (msb << 8) | (lsb) );
+                values[i] = val;
+                sz2 += (uint32_t)(((uint32_t)val) * ((uint32_t)val));
+                Serial.print(" ");
+                Serial.print(val, DEC);
+            }            
+            Serial.print(" Size = ");
+            float sz = sqrt(sz2);
+            Serial.print(sz);
+            float y = (float) values[1];
+            float z = (float) values[2];
+            float theta = atan2(y, -z) * RAD2DEG;
+            Serial.print(" Angle = ");
+            Serial.print(theta);
+            Serial.print(" FIFO: 0b");
+            Serial.print(fifo_data[i], BIN);
+
+            Serial.print('\n');
         }
-        
-    }*/
+    }    
 }
 
 

@@ -17,13 +17,15 @@ void adxl_init()
     spi_set_confirm(ADXL_ADR, ADXL_DATA_FORMAT, ADXL_DATA_FORMAT_V);
     
     spi_set_confirm(ADXL_ADR, ADXL_FIFO_CTL, ADXL_FIFO_CTL_V);
+
+    // Empty FIFO
+    for (uint8_t i = 0; i < 32; i++)
+    {
+        spi_read_setting(ADXL_ADR, ADXL_DATAX0);
+    }
     
     spi_set_confirm(ADXL_ADR, ADXL_INT_ENABLE, ADXL_INT_ENABLE_V);
     
-    spi_set_confirm(ADXL_ADR, ADXL_POWER_CTL, ADXL_POWER_CTL_V);
-
-    delay(1000);
-
     spi_set_confirm(ADXL_ADR, ADXL_POWER_CTL, ADXL_POWER_CTL_V);
 }
 
