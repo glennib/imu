@@ -88,7 +88,8 @@ void setup()   // treat this as a main()
     uint8_t adxl_data[ADXL_SAMPLES_V][ADXL_DATA_BYTES];
     //uint8_t fifo_data[ADXL_SAMPLES_V];
     
-    while (1)
+    //while (1)
+    for (int main_loop_counter = 0; main_loop_counter < 300; main_loop_counter++) // gather 300 * 20 = 6000 samples = 60s of samples
     {
         //debug("Waiting for interrupt");
         
@@ -150,14 +151,16 @@ void setup()   // treat this as a main()
             float y = (float) values[1];
             float z = (float) values[2];
             float theta = atan2(y, -z) * RAD2DEG;
-            Serial.print(" Angle = ");
-            Serial.print(theta);
+            //Serial.print(" Angle = ");
+            Serial.print(theta, 4);
             //Serial.print(" FIFO: 0b");
             //Serial.print(fifo_data[i], BIN);
 
             Serial.print('\n');
         }
-    }    
+    }
+
+    while(1) { ; }
 }
 
 
