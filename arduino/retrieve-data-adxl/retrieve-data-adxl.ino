@@ -88,8 +88,8 @@ void setup()   // treat this as a main()
     uint8_t adxl_data[ADXL_SAMPLES_V][ADXL_DATA_BYTES];
     //uint8_t fifo_data[ADXL_SAMPLES_V];
     
-    //while (1)
-    for (int main_loop_counter = 0; main_loop_counter < 300; main_loop_counter++) // gather 300 * 20 = 6000 samples = 60s of samples
+    while (1)
+    //for (int main_loop_counter = 0; main_loop_counter < 300; main_loop_counter++) // gather 300 * 20 = 6000 samples = 60s of samples
     {
         //debug("Waiting for interrupt");
         
@@ -123,7 +123,7 @@ void setup()   // treat this as a main()
             {
                 error("Unexpected counter value");
             }
-            Wire.endTransmission();
+            //Wire.endTransmission();
             delayMicroseconds(5);
             // get fifo data
             //fifo_data[i] = spi_read_setting(ADXL_ADR, ADXL_FIFO_STATUS);
