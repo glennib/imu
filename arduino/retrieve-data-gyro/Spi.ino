@@ -16,24 +16,37 @@ void spi_set_confirm(const uint8_t adr, const uint8_t reg, const uint8_t val)
     Wire.beginTransmission(adr);
     Wire.write(reg);
     Wire.endTransmission();
+
+    delay(5);
+    
     Wire.requestFrom((uint8_t)adr, (uint8_t)1);
     
     if (Wire.available())
     {
-        uint8_t read = Wire.read();
-        
+        uint8_t read = Wire.read();        
         if (!(val == read))
         {
             error("SPI setting not confirmed");
+            Serial.println("SPI setting not confirmed");
+            Serial.print("0x");
+            Serial.print(reg, HEX);
+            Serial.print(": Tried to write ");
+            Serial.print(val, HEX);
+            Serial.print(", read 0x");
+            Serial.println(read, HEX);
+            while(1)
+            {
+                
+            }
         }
         else
-        {/*
+        {
             Serial.print("0x");
             Serial.print(adr, HEX);
             Serial.print(": 0x");
             Serial.print(reg, HEX);
             Serial.print(" = 0b");
-            Serial.println(read, BIN);*/
+            Serial.println(read, BIN);
         }
     }
     else
