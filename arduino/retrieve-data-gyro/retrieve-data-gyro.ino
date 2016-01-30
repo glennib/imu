@@ -20,7 +20,7 @@ void initialize()
     spi_init();
     itg_init();
     gpio_init();
-    Serial.println("Ready.");
+    //Serial.println("Ready.");
 }
 
 
@@ -88,11 +88,11 @@ void setup()   // treat this as a main()
     
 
 
-    unsigned long last_time = millis();
-    while(1)
-    //for (uint32_t mlc = 0; mlc < 6000; mlc++)
+    //unsigned long last_time = millis();
+    //while(1)
+    for (uint32_t mlc = 0; mlc < 6000; mlc++)
     {
-        debug("Waiting for interrupt");
+        //debug("Waiting for interrupt");
         while(digitalRead(ITG_INT_PIN) == 1)
         {/*
             delay(1000);
@@ -111,13 +111,13 @@ void setup()   // treat this as a main()
 
             Serial.print('\n');*/
         }
-        debug("Interrupt happened");
-        unsigned long current_time = millis();
+        //debug("Interrupt happened");
+        //unsigned long current_time = millis();
 
-        Serial.print("Elapsed: ");
-        Serial.println(current_time - last_time);
+        //Serial.print("Elapsed: ");
+        //Serial.println(current_time - last_time);
 
-        last_time = current_time;
+        //last_time = current_time;
 
         // interrupt has occured
 

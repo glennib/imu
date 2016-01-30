@@ -41,12 +41,12 @@ void spi_set_confirm(const uint8_t adr, const uint8_t reg, const uint8_t val)
         }
         else
         {
-            Serial.print("0x");
+            /*Serial.print("0x");
             Serial.print(adr, HEX);
             Serial.print(": 0x");
             Serial.print(reg, HEX);
             Serial.print(" = 0b");
-            Serial.println(read, BIN);
+            Serial.println(read, BIN);*/
         }
     }
     else

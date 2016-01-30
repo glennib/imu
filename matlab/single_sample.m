@@ -1,13 +1,13 @@
-clear all;
+%clear all;
 close all;
 
 PATH = '../samples/';
-FILE_NAME = 'adxl_2016-01-15_100Hz_60s.ods';
+FILE_NAME = 'itg_2016-01-30_100Hz_60s';
 
 FREQUENCY = 100; % Hz
 
 complete_path = strcat(PATH, FILE_NAME);
-sample = xlsread(complete_path);
+%sample = xlsread(complete_path);
 
 n = size(sample, 1);
 
@@ -17,7 +17,9 @@ sigma_2 = var(sample);
 
 sigma = sqrt(sigma_2);
 
-%plot(1:n, sample-nu)
+figure;
+plot(1:n, sample-nu)
 
-%autocorr(sample-nu)
+figure;
+autocorr(sample-nu)
 
