@@ -93,7 +93,7 @@ void setup()   // treat this as a main()
     //for (uint32_t mlc = 0; mlc < 6000; mlc++)
     {
         debug("Waiting for interrupt");
-        while(digitalRead(ITG_INT_PIN) == 0)
+        while(digitalRead(ITG_INT_PIN) == 1)
         {/*
             delay(1000);
             Serial.print("Pin ");
