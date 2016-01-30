@@ -7,6 +7,7 @@
 #include "Debug.h"
 #include "Spi.h"
 #include "Itg.h"
+#include "Kalman.h"
 
 #define RAD2DEG 57.29577951
 
