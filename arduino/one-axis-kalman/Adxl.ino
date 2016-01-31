@@ -60,6 +60,6 @@ float adxl_get_data()
     }
     float y = (float) values[1];
     float z = (float) values[2];
-    float theta = atan2(y, -z) * RAD2DEG;
+    float theta = atan2(y, -z);
 }
 

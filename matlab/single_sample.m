@@ -2,12 +2,12 @@
 close all;
 
 PATH = '../samples/';
-FILE_NAME = 'itg_2016-01-30_100Hz_60s';
+FILE_NAME = 'itg_2016-02-01_100Hz_60s.ods';
 
 FREQUENCY = 100; % Hz
 
 complete_path = strcat(PATH, FILE_NAME);
-%sample = xlsread(complete_path);
+sample = xlsread(complete_path);
 
 n = size(sample, 1);
 

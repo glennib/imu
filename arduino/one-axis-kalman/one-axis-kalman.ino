@@ -2,14 +2,13 @@
 #include <stdint.h>
 
 #include "Adxl.h"
+#include "Itg.h"
 #include "Gpio.h"
 #include "Error.h"
 #include "Debug.h"
 #include "Spi.h"
-#include "Itg.h"
 #include "Kalman.h"
-
-#define RAD2DEG 57.29577951
+#include "Auxiliary.h"
 
 void initialize()
 {
@@ -19,6 +18,7 @@ void initialize()
     itg_init();
     adxl_init();
     gpio_init();
+    kalman_init();
     Serial.println("Ready");
 }
 
@@ -34,16 +34,24 @@ void setup() // this is main().
             // Just wait.
         }
 
-        float gyro_measurement = itg_get_data();
+        volatile float gyro_measurement = itg_get_data() - ITG_MEAN;
         
         while(digitalRead(ADXL_INT_PIN == 0))
         {
             // Just wait.
         }
 
-        float accel_measurement = adxl_get_data();
+        volatile float accel_measurement = adxl_get_data() - ADXL_MEAN;
 
-        
+        float x[2] = {0, 0};
+        kalman_update(accel_measurement, gyro_measurement, x);
+        Serial.print("Accelerometer: ");
+        Serial.print(accel_measurement);
+        Serial.print(" Gyroscope: ");
+        Serial.print(gyro_measurement);
+        Serial.print(" Angle: ");
+        Serial.print(x[0] * RAD2DEG);
+        Serial.print('\n');
     }
 }
 

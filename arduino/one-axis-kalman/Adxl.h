@@ -1,3 +1,7 @@
+#pragma once
+
+#include "Auxiliary.h"
+
 // Settings:
 
 
@@ -55,6 +59,10 @@
 #define ADXL_FIFO_STATUS 0x39
 
 #define ADXL_DATA_BYTES (ADXL_DATAZ1 - ADXL_DATAX0 + 1)
+
+
+#define ADXL_MEAN -0.0477f
+#define ADXL_SIGMA2 2.8877e-5
 
 void adxl_init();
 

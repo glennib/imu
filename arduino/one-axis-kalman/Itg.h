@@ -1,3 +1,6 @@
+#pragma once
+
+#include "Auxiliary.h"
 
 // Settings:
 #define ITG_SMPLRT_DIV_V 79 // Divider - should be 79 to get 100 Hz data [0,255]
@@ -49,6 +52,9 @@
 #define ITG_MAX_FROM 32767
 #define ITG_MIN_TO (-2000)
 #define ITG_MAX_TO 2000
+
+#define ITG_MEAN 0.0163f
+#define ITG_SIGMA2 2.4272e-6
 
 void itg_init();
 

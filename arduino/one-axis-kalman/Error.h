@@ -1,1 +1,4 @@
-void error(const char* s);
+#pragma once
+
+void error(const char* s);
+
