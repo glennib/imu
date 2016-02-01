@@ -26,6 +26,8 @@ void initialize()
 void setup() // this is main().
 {
     initialize();
+
+    float theta = 0;
     
     while(1)
     {
@@ -36,22 +38,9 @@ void setup() // this is main().
 
         volatile float gyro_measurement = itg_get_data() - ITG_MEAN;
         
-        while(digitalRead(ADXL_INT_PIN == 0))
-        {
-            // Just wait.
-        }
+        theta += gyro_measurement * KALMAN_DT;
 
-        volatile float accel_measurement = adxl_get_data() - ADXL_MEAN;
-
-        float x[2] = {0, 0};
-        kalman_update(-accel_measurement, gyro_measurement * 0.40, x);
-        /*Serial.print("Accelerometer: ");
-        Serial.print(accel_measurement);
-        Serial.print(" Gyroscope: ");
-        Serial.print(gyro_measurement);
-        Serial.print(" Angle: ");*/
-        Serial.print(x[0] * RAD2DEG);
-        Serial.print('\n');
+        Serial.println(theta * RAD2DEG);
     }
 }
 
