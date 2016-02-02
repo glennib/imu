@@ -2,7 +2,7 @@
 close all;
 
 PATH = '../samples/';
-FILE_NAME = 'itg_2016-02-01_100Hz_60s.ods';
+FILE_NAME = 'itg_2016-02-02_100Hz_60s.ods';
 
 FREQUENCY = 100; % Hz
 

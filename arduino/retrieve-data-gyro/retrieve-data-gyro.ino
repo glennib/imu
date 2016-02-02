@@ -14,6 +14,7 @@
 #define MAX_TO 2000
 
 #define MEAN_LSB 12.69884f
+#define ITG_LSB2RADS 0.00127406f
 
 void initialize()
 {
@@ -91,10 +92,10 @@ void setup()   // treat this as a main()
 
     float integrated = 0;
     //unsigned long last_time = millis();
-    while(1)
-    //for (uint32_t mlc = 0; mlc < 6000; mlc++)
+    //while(1)
+    for (uint32_t mlc = 0; mlc < 6000; mlc++)
     {
-        while(Serial.available())
+        /*while(Serial.available())
         {
             char c = Serial.read();
             if (c == 'r')
@@ -112,7 +113,7 @@ void setup()   // treat this as a main()
                     }
                 }
             }
-        }
+        }*/
         
         //debug("Waiting for interrupt");
         while(digitalRead(ITG_INT_PIN) == 1)
@@ -162,15 +163,15 @@ void setup()   // treat this as a main()
         }
 
         int16_t value = (int16_t) ( (itg_data[0] << 8) | (itg_data[1]) );
-        integrated += ((float)value - MEAN_LSB) * 0.01f;
+        //integrated += ((float)value - MEAN_LSB) * 0.01f;
 
         
         //const int32_t FROM_SIZE = MAX_FROM - MIN_FROM + 1;
         //const float TO_SIZE = MAX_TO - MIN_TO;
         //float theta = (float)(value - MIN_FROM) / FROM_SIZE * TO_SIZE + MIN_TO;
-
-        //Serial.println(value);
-        Serial.println(integrated);
+        float theta = (float) value * ITG_LSB2RADS;
+        Serial.println(theta,6);
+        //Serial.println(integrated);
     }
     
     while(1) { ; }
