@@ -27,10 +27,7 @@ float itg_get_data()
     }
 
     int16_t value = (int16_t) ( (itg_data[0] << 8) | (itg_data[1]) );
-    const int32_t FROM_SIZE = ITG_MAX_FROM - ITG_MIN_FROM + 1;
-    const float TO_SIZE = ITG_MAX_TO - ITG_MIN_TO;
-    float theta = (float)(value - ITG_MIN_FROM) / FROM_SIZE * TO_SIZE + ITG_MIN_TO;
-    theta *= DEG2RAD;
+    float theta = (float)value * ITG_LSB2RADS;
     return theta;
 }
 

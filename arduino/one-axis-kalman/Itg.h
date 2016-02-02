@@ -56,6 +56,8 @@
 #define ITG_MEAN 0.0163f
 #define ITG_SIGMA2 2.4272e-6
 
+#define ITG_LSB2RADS 0.00127406f
+
 void itg_init();
 
 float itg_get_data();
